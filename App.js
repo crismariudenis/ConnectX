@@ -9,6 +9,7 @@ import Profile from "./pages/Profile";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import TabBarIcon from "./components/TabBarIcon";
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
