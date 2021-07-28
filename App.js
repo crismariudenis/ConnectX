@@ -2,17 +2,17 @@ import * as React from "react";
 import { Text, View, StyleSheet, Pressable, Button } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 //import { News, Chat, Profile } from "./pages";
-import { PURPLE, LIGHT_PURPLE } from "./assets/styles";
+import { PURPLE, LIGHT_PURPLE ,DARK_BLACK} from "./assets/styles";
 import News from "./pages/News";
 import Chat from "./pages/Chat";
 import Profile from "./pages/Profile";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import TabBarIcon from "./components/TabBarIcon";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-
+//const Tab = createMaterialBottomTabNavigator();
 const App = () => (
   <NavigationContainer>
     <Stack.Navigator>
@@ -23,23 +23,15 @@ const App = () => (
         {() => (
           <Tab.Navigator
             tabBarOptions={{
-               showLabel: false,
-              activeTintColor: PURPLE,
-              inactiveTintColor: LIGHT_PURPLE,
-              //   labelStyle: {
-              //     fontSize: 14,
-              //     textTransform: "uppercase",
-              //     paddingTop: 10,
-              //   },
-              //   style: {
-              //     backgroundColor: WHITE,
-              //     borderTopWidth: 0,
-              //     marginBottom: 0,
-              //     shadowOpacity: 0.05,
-              //     shadowRadius: 10,
-              //     shadowColor: BLACK,
-              //     shadowOffset: { height: 0, width: 0 },
-              //   },
+              showLabel: false,
+              keyboardHidesTabBar: true,
+             
+                style: {
+                  backgroundColor: DARK_BLACK,
+                 // backgroundColor:'#fff',
+                  borderTopWidth: 0,
+                  marginBottom: 0,   
+                },
             }}
           >
             <Tab.Screen
@@ -59,7 +51,7 @@ const App = () => (
               name="Chat"
               component={Chat}
               options={{
-               // tabBarBadge:3, //------------------------NOTIFICATIONS--->
+               // tabBarBadge:69, //------------------------NOTIFICATIONS--->
                 tabBarIcon: ({ focused }) => (
                   <TabBarIcon
                     focused={focused}
