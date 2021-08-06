@@ -6,7 +6,7 @@ const Choice = ({ type }) => {
     const color = type === 'like' ? RED : GREEN;
     return (
         <View style={styles.container,{borderColor:color}}>
-            <Text style={styles.text, { color }}>{type}</Text>
+            <Text style={styles.text,{color:color}}>{type}</Text>
         </View>
     );
 }

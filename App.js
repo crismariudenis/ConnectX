@@ -2,7 +2,7 @@ import * as React from "react";
 import { Text, View, StyleSheet, Pressable, Button } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 //import { News, Chat, Profile } from "./pages";
-import { PURPLE, LIGHT_PURPLE ,DARK_BLACK} from "./assets/styles";
+import { COLORS} from "./assets/styles";
 import News from "./pages/News/index";
 import Chat from "./pages/Chat/index";
 import Profile from "./pages/Profile/index";
@@ -27,7 +27,7 @@ const App = () => (
               keyboardHidesTabBar: true,
              
                 style: {
-                  backgroundColor: DARK_BLACK,
+                  backgroundColor: COLORS.DARK_BLACK,
                  // backgroundColor:'#fff',
                   borderTopWidth: 0,
                   marginBottom: 0,   
