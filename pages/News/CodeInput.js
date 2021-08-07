@@ -7,22 +7,29 @@ const CodeInput = () => {
   const [value, setValue] = React.useState('');
   const [data, setData] = useState([]);
   useEffect(() => {
+    const imageUrl = "https://.../image.jpg";
     // POST request using fetch inside useEffect React hook
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: {
+      body: JSON.stringify({
         "backgroundColor": "rgba(144, 19, 254, 100)",
         "code": "Made with Love in India by Sumanjay",
         "theme": "dracula"
-      }
+      })
     };
     fetch('https://carbonnowsh.herokuapp.com/', requestOptions)
-      .then(response => response.jpg())
-      .then(data => console.log(data));
-  
+      .then(response => response.blob())
+      .then(imageBlob => {
+        // Then create a local URL for that image and print it 
+        const imageObjectURL = URL.createObjectURL(imageBlob);
+        console.log(imageObjectURL);
+      })
+      .then(data => setData(data));
+
+    // empty dependency array means this effect will only run once (like componentDidMount in classes)
   }, []);
-  console.log(data);
+  console.log(data)
   const sendCode = () => {
     setValue('');
   }
