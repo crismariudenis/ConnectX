@@ -20,8 +20,6 @@ const App = () => (
     >
       <Stack.Screen
         name="Tab"
-
-        
       >
         {() => (
           <Tab.Navigator>
