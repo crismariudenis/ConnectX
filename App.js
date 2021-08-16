@@ -16,7 +16,9 @@ const Tab = createBottomTabNavigator();
 const App = () => (
   <NavigationContainer>
     <Stack.Navigator
-      screenOptions={{ headerShown: false, display: 'none' ,backgroundColor:'red'}}
+      screenOptions={{ headerShown: false, display: 'none', backgroundColor: 'red' }}
+      
+      
     >
       <Stack.Screen
         name="Tab"
