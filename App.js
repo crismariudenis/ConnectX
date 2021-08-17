@@ -17,8 +17,6 @@ const App = () => (
   <NavigationContainer>
     <Stack.Navigator
       screenOptions={{ headerShown: false, display: 'none', backgroundColor: 'red' }}
-      
-      
     >
       <Stack.Screen
         name="Tab"
