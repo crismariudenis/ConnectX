@@ -83,5 +83,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.DARK_BLACK,
     alignItems: 'center',
+    textAlign:'center',
+   // top:45
   },
+
 });

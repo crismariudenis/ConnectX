@@ -14,7 +14,7 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 //const Tab = createMaterialBottomTabNavigator();
 const App = () => (
-  <NavigationContainer>
+  <NavigationContainer independent={true}>
     <Stack.Navigator
       screenOptions={{ headerShown: false, display: 'none', backgroundColor: 'red' }}
     >
@@ -23,6 +23,31 @@ const App = () => (
       >
         {() => (
           <Tab.Navigator>
+            <Tab.Screen
+              name="Profile"
+              component={Profile}
+              options={{
+                tabBarHideOnKeyboard: true,
+                headerShown: false,
+                tabBarShowLabel: false,
+                tabBarStyle: [
+                  {
+                    display: "flex",
+                    borderTopWidth: 0,
+                    marginBottom: 0,
+                    backgroundColor: COLORS.DARK_BLACK,
+                  },
+
+                ],
+                tabBarIcon: ({ focused }) => (
+                  <TabBarIcon
+                    focused={focused}
+                    iconName="person"
+                    text="Matches"
+                  />
+                ),
+              }}
+            />
             <Tab.Screen
               name="News"
               component={News}
@@ -35,7 +60,7 @@ const App = () => (
                     display: "flex",
                     borderTopWidth: 0,
                     marginBottom: 0,
-                   // backgroundColor: 'COLORS.DARK_BLACK',
+                    backgroundColor: 'COLORS.DARK_BLACK',
                   },
 
                 ],
@@ -74,31 +99,7 @@ const App = () => (
                 ),
               }}
             />
-            <Tab.Screen
-              name="Profile"
-              component={Profile}
-              options={{
-                tabBarHideOnKeyboard: true,
-                headerShown: false,
-                tabBarShowLabel: false,
-                tabBarStyle: [
-                  {
-                    display: "flex",
-                    borderTopWidth: 0,
-                    marginBottom: 0,
-                    backgroundColor: COLORS.DARK_BLACK,
-                  },
-
-                ],
-                tabBarIcon: ({ focused }) => (
-                  <TabBarIcon
-                    focused={focused}
-                    iconName="person"
-                    text="Matches"
-                  />
-                ),
-              }}
-            />
+           
           </Tab.Navigator>
         )}
       </Stack.Screen>

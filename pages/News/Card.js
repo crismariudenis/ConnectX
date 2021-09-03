@@ -45,7 +45,7 @@ const Card = ({ name, source, isFirst, swipe, tiltSign, ...rest }) => {
             {
                 isFirst && renderChoice()
             } */}
-        </Animated.View>  
+        </Animated.View>
     )
 }
 
@@ -54,18 +54,18 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 45,
         flex: 1,
-        //  justifyContent: "center",
-       //  alignItems: "center",
-       // backgroundColor:'yellow'
+        justifyContent: "center",
+        alignItems: "center",
+      //  backgroundColor: 'yellow'
     },
     img: {
-        bottom:45,
+        bottom: 45,
         width: CARD_WIDTH,
         height: CARD_HEIGHT,
         borderRadius: 20,//change in gradient to
-       // backgroundColor: 'red',
+        // backgroundColor: 'red',
         //resizeMode:"center"
-        resizeMode:'stretch'
+        resizeMode: 'stretch'
     },
     tinyLogo: {
         width: 50,
