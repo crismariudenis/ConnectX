@@ -17,7 +17,7 @@ const AlertNotification = () => {
     //   onPress: () => console.log("Cancel Pressed"),
     //   style: "cancel",
     // },
-    { text: "OK", onPress: () => console.log("OK Pressed") },
+    { text: "OK", /*onPress: () => console.log("OK Pressed")*/ },
   ]);
 };
 function CardScreen({ navigation }) {
@@ -30,7 +30,7 @@ function CardScreen({ navigation }) {
         textAlign: "center",
       }}
     >
-      <CodeInput />
+      <CodeInput name={profile.name} picture={profile.profileSource} email={profile.email}/>
     </View>
   );
 }
@@ -49,7 +49,7 @@ function HomeScreen({ navigation }) {
         <Image source={profile.profileSource} style={styles.image} />
         <Text style={styles.name}>{profile.name}</Text>
       </View>
-      <View style={styles.container1}>
+      <View style={{},styles.container1}>
         <Pressable
           style={styles.button}
           onPress={() => navigation.push("Card")}

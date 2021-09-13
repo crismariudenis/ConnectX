@@ -2,8 +2,11 @@ import React from "react";
 import { View, StyleSheet, Text, Pressable } from "react-native";
 import { COLORS } from "../../../assets/styles";
 
-const TypeButton = () => {
+const TypeButton = ({ passType }) => {
   const [type, setType] = React.useState("fetcher");
+  React.useEffect(() => {
+    passType(type);
+  });
   return (
     <View style={styles.container}>
       <View style={styles.smallContainer}>
@@ -18,7 +21,9 @@ const TypeButton = () => {
             styles.button,
           ]}
         ></Pressable>
-        <Text style={[{ color: COLORS.FETCH_GREEN }, styles.text]}>fetcher</Text>
+        <Text style={[{ color: COLORS.FETCH_GREEN }, styles.text]}>
+          fetcher
+        </Text>
       </View>
       <View style={styles.smallContainer}>
         <Pressable
@@ -32,7 +37,9 @@ const TypeButton = () => {
             styles.button,
           ]}
         ></Pressable>
-        <Text style={[{ color: COLORS.CATCH_ORANGE }, styles.text]}>catcher</Text>
+        <Text style={[{ color: COLORS.CATCH_ORANGE }, styles.text]}>
+          catcher
+        </Text>
       </View>
     </View>
   );
