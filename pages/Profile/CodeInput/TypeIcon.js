@@ -2,43 +2,31 @@ import React from "react";
 import { View, StyleSheet, Text, Pressable } from "react-native";
 import { COLORS } from "../../../assets/styles";
 
-const TypeButton = ({ passType }) => {
-  const [type, setType] = React.useState("fetcher");
-  React.useEffect(() => {
-    passType(type);
-  });
+const TypeButton = ({ type }) => {
   return (
     <View style={styles.container}>
       <View style={styles.smallContainer}>
-        <Pressable
-          onPress={() => setType("fetcher")}
+        <View
           style={[
             {
-              borderColor: COLORS.FETCH_GREEN,
+              borderColor:
+                type === "fetcher" ? COLORS.FETCH_GREEN : COLORS.CATCH_ORANGE,
               backgroundColor:
-                type == "fetcher" ? COLORS.FETCH_GREEN : "transparent",
+                type === "fetcher" ? COLORS.FETCH_GREEN : COLORS.CATCH_ORANGE,
             },
             styles.button,
           ]}
-        ></Pressable>
-        <Text style={[{ color: COLORS.FETCH_GREEN }, styles.text]}>
-          fetcher
-        </Text>
-      </View>
-      <View style={styles.smallContainer}>
-        <Pressable
-          onPress={() => setType("catcher")}
+        ></View>
+        <Text
           style={[
             {
-              borderColor: COLORS.CATCH_ORANGE,
-              backgroundColor:
-                type == "catcher" ? COLORS.CATCH_ORANGE : "transparent",
+              color:
+                type === "fetcher" ? COLORS.FETCH_GREEN : COLORS.CATCH_ORANGE,
             },
-            styles.button,
+            styles.text,
           ]}
-        ></Pressable>
-        <Text style={[{ color: COLORS.CATCH_ORANGE }, styles.text]}>
-          catcher
+        >
+          {type}
         </Text>
       </View>
     </View>
@@ -48,20 +36,25 @@ const TypeButton = ({ passType }) => {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
+   // backgroundColor: "red",
+    //alignItems: "center",
+    //alignContent: "center",
+    // justifyContent: "center",
   },
   smallContainer: {
     flexDirection: "row",
     padding: 10,
   },
   button: {
-    width: 5,
-    height: 5,
-    borderRadius: 100,
-    borderStyle: "solid",
-    borderWidth: 3,
     justifyContent: "center",
     alignItems: "center",
-    padding: 10,
+    alignContent: "center",
+    width: 20,
+    height: 20,
+    borderRadius: 100,
+    //borderStyle: "solid",
+    //borderWidth: 3,
+    // padding: 10,
     // borderColor:'red',
     // backgroundColor: "transparent",
     //  margin: 10,
@@ -78,7 +71,7 @@ const styles = StyleSheet.create({
     borderEndColor: "yellow",
   },
   text: {
-    fontSize: 20,
+    fontSize: 15,
     paddingLeft: 10,
   },
 });

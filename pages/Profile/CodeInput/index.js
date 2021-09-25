@@ -15,73 +15,77 @@ import { COLORS } from "../../../assets/styles";
 import { tagsCode, tagsValue, BASE_URL, themes } from "./Parameters";
 import ThemePicker from "./ThemePicker";
 import TypeButton from "./TypeButton";
-//import * as ImagePicker from "@react-native-picker/picker";
-//import { launchCameraAsync, launchImageLibraryAsync} from "expo-image-picker";
+import ImageUploader from "./ImageUploader";
 import * as ImagePicker from "expo-image-picker";
+import CardFetcher from "./CardFetcher";
 const CodeInput = ({ name, picture, email }) => {
   const [showUrl, setshowUrl] = useState(false);
   const [code, setCode] = useState("");
   const [theme, setTheme] = useState("material");
   const [imageUrl, setImageUrl] = useState("https://carbon.now.sh/");
-
+  const [image, setImage] = useState(null);
   const [message, setMessage] = useState("");
   const [type, setType] = useState("fetcher");
+  const [test, setTest] = useState(false);
   const resetValue = () => {
     setMessage("");
-    setType("fetcher");
-    setCode('');
-  }
-  let openImagePickerAsync = async () => {
-    let permissionResult =
-      await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-    if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
-      return;
+   // setType("fetcher");
+    setCode("");
+    setImage(null);
+  };
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: false,
+      aspect: [2, 2],
+      quality: 1,
+    }).catch((err) => console.log(err));
+    // console.log(result);
+    if (!result.cancelled) {
+      setImage(result.uri);
     }
-
-    let pickerResult = await ImagePicker.launchImageLibraryAsync();
-    console.log(pickerResult);
-   //console.log(pickerResult.uri)
   };
-  const submitData = () => {
-    fetch("http://192.168.1.241:3000/send-data", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        email,
-        picture,
-        message,
-        type,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      });
-    resetValue();
-  };
-  // useEffect(() => {
-  //   const finalUrl = BASE_URL + '?code=' + "import { COLORS } from '../../assets/styles/'" + '&bg=' + '#FFA07A' + '&l=' + 'auto';
-  //   var request = new XMLHttpRequest();
-  //   request.onreadystatechange = (e) => {
-  //     if (request.readyState !== 4) {
-  //       return;
-  //     }
-  //     if (request.status === 200) {
-  //       console.log('success', request.text);
-  //     } else {
-  //       console.warn('error');
-  //     }
-  //   };
-
-  //   request.open('GET', finalUrl);
-  //   request.send();
-  // }, []);
+  // const submitData = () => {
+  //   fetch("http://192.168.1.241:3000/send-data", {
+  //     method: "post",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       name,
+  //       email,
+  //       picture,
+  //       message,
+  //       type,
+  //     }),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //     });
+  //   resetValue();
+  // };
+  //  handlePress=()=> {
+  //    resetValue();
+  //    console.log('value reset');
+  // }
   function getUrl(code, theme) {
+    ///Set height to 40 rows
+    if (code.split(/\r\n|\r|\n/).length < 40) {
+      var rows = 40 - code.split(/\r\n|\r|\n/).length;
+      for (var i = 1; i <= rows; i++) code += "\n";
+    }
+    if (code.split(/\r\n|\r|\n/).length > 40) {
+      var rows = code.split(/\r\n|\r|\n/).length - 40;
+      var contor = 0;
+      var poz;
+      for (var i = code.length - 1; i >= 0; i--) {
+        if (code[i] === "\n") contor++;
+        poz = i;
+        if (contor === rows) break;
+      }
+      code = code.slice(0, poz);
+    }
     code = encodeURIComponent(code);
     tagsValue[1] = theme;
     let url = "";
@@ -130,7 +134,13 @@ const CodeInput = ({ name, picture, email }) => {
           passTheme={passTheme}
           style={styles.themepicker}
         />
-        <View style={{ alignItems: "center" ,justifyContent:'space-evenly',flexDirection:'row'}}>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "space-evenly",
+            flexDirection: "row",
+          }}
+        >
           {showUrl && (
             <Pressable
               style={styles.button}
@@ -143,7 +153,7 @@ const CodeInput = ({ name, picture, email }) => {
               </Text>
             </Pressable>
           )}
-          <Pressable style={styles.button} onPress={openImagePickerAsync}>
+          <Pressable style={styles.button} onPress={pickImage}>
             <Text style={[styles.text, { textAlign: "center", paddingTop: 0 }]}>
               Upload Image
             </Text>
@@ -151,30 +161,28 @@ const CodeInput = ({ name, picture, email }) => {
         </View>
         <Text style={styles.text}>Type</Text>
         <TypeButton passType={passType} />
-        <Text style={styles.text}>Message {message.length}/60</Text>
+        <Text style={styles.text}>Message {message.length}/80</Text>
         <TextInput
           //  showSoftInputOnFocus={true}
-          maxLength={60}
+          maxLength={80}
           numberOfLines={4}
           onChangeText={(text) => setMessage(text)}
           value={message}
           color={COLORS.PURPLE}
           style={[{}, styles.textinput]}
         />
-        <View style={{ alignItems: "center" }}>
-          <Button
-            onPress={() => {
-              submitData();
-            }}
-            title="Send Data"
-            color={COLORS.PURPLE}
-          />
-        </View>
-        <View style={styles.container2}>
-          <Image source={picture} style={styles.image} />
-          <Text style={styles.name}>{name}</Text>
-        </View>
+        <ImageUploader
+          imageUri={{ uri: image }}
+          //theme={theme}
+          message={message}
+          picture={picture}
+          type={type}
+          name={name}
+          email={email}
+          resetValue={resetValue}
+        />
       </ScrollView>
+        {/* <CardFetcher/> */}
     </View>
   );
 };

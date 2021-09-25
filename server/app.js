@@ -39,8 +39,8 @@ app.post('/send-data', (req, res) => {
     const card = new Card({
       name: req.body.name,
       email: req.body.email,
-      phone: req.body.phone,
       picture: req.body.picture,
+      imageUri:req.body.imageUri,
       message:req.body.message,
       type:req.body.type,
     });
@@ -67,6 +67,7 @@ app.post('/update', (req, res) => {
     name: req.body.name,
     email: req.body.email,
     picture: req.body.picture,
+    imageUri: req.body.imageUri,
     message: req.body.message,
     type: req.body.type,
   })

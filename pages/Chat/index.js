@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import DB from "./DB";
 const Chat = () => {
   return (
     <View
@@ -10,7 +9,7 @@ const Chat = () => {
         alignItems: "center",
       }}
     >
-     <DB/>
+     <Text>Coming soon</Text>
     </View>
   );
 };

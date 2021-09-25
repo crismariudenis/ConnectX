@@ -26,7 +26,7 @@ const ThemePicker = ({ themes, passTheme }) => {
           color: COLORS.PURPLE,
         }}
         itemStyle={{
-          backgroundColor: "grey",
+          backgroundColor: COLORS.DARK_BLACK,
           color: "blue",
           fontFamily: "Ebrima",
           fontSize: 17,

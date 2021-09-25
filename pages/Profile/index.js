@@ -1,7 +1,7 @@
 import React from "react";
 import {StyleSheet,Text,View,Button,Pressable,Image,Alert,} from "react-native";
 import { COLORS } from "../../assets/styles/";
-import CodeInput from "./CodeInput/CodeInput";
+import CodeInput from "./CodeInput/";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
