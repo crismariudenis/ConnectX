@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { View, StyleSheet, Text, Image, Button, Alert } from "react-native";
 import { COLORS } from "../../../assets/styles";
 import TypeIcon from "./TypeIcon";
-import Card from "../../../components/Card";
+import Card from "../../../components/CardTemplate";
 const ImageUploader = ({
   imageUri,
   message,
@@ -15,7 +15,7 @@ const ImageUploader = ({
   const [uploadProgress, setUploadProgress] = React.useState(0);
   const [response, setResponse] = React.useState("Your was declined");
   const [showImage, setShowImage] = useState(false);
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState("https://i.imgur.com/TnQwHaZ.png");///----->Default Route
   useEffect(() => {
     if (imageUri.uri) setShowImage(true);
     else setShowImage(false);
@@ -42,7 +42,12 @@ const ImageUploader = ({
       .then((data) => {
         console.log(data);
         // Alert.alert(`${data.name} is saved successfuly`);
-      });
+      })
+      .catch(err => {
+      Alert.alert(`Something went wrong ${err}`)
+    })
+    
+    
     resetValue();
   };
   const onClickUpload = () => {
@@ -58,8 +63,9 @@ const ImageUploader = ({
     xhr.addEventListener("load", () => {
       setUploadProgress(100);
       setResponse(xhr.response);
-      setUrl(JSON.parse(response).data.link);
-      console.log(url);
+      setUrl(JSON.parse(xhr.response).data.link);
+    // console.log(JSON.parse(response).data.link);
+      console.log(response);
       setShowImage(false);
     });
 

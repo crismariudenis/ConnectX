@@ -2,12 +2,14 @@ import React, { useState, useCallback } from 'react';
 import { View, StyleSheet, Text, Image, Animated } from 'react-native';
 import Choice from './Choice';
 import { PURPLE } from '../../assets/styles'
+import CardFetcher from './CardFetcher';
 
 import { LinearGradient } from 'react-native-svg';
 import { CARD_HEIGHT, CARD_WIDTH, ACTION_OFFSET } from './style';
+import CardTemplate from '../../components/CardTemplate'
 // Image width 500
 //30 lines
-const Card = ({ name, source, isFirst, swipe, tiltSign, ...rest }) => {
+const Card = ({ name, imageUri, type, message, picture , isFirst, swipe, tiltSign, ...rest }) => {
     const rotate = Animated.multiply(swipe.x, tiltSign).interpolate({
         inputRange: [-ACTION_OFFSET, 0, ACTION_OFFSET],
         outputRange: ['8deg', '0deg', '-8deg'],
@@ -38,15 +40,32 @@ const Card = ({ name, source, isFirst, swipe, tiltSign, ...rest }) => {
     //     </>
     // }, [likeOpacity, nopeOpacity])
     return (
-        <Animated.View style={[styles.container, isFirst && animatedCardStyle]} {...rest}>
-            <Image source={source} style={styles.img} />
-            <LinearGradient colors={['transparent', 'rbga(0,0,8,9)']} style={styles.gradient} />
-            {/* <Text style={styles.name}>{name}</Text>
+      <Animated.View
+        style={[styles.container, isFirst && animatedCardStyle]}
+        {...rest}
+      >
+        {/* <Image source={source} style={styles.img} /> */}
+        <CardTemplate
+          name={name}
+          imageUri={{ uri: imageUri }}
+          type={type}
+          message={message}
+          picture={{
+            uri: "https://i.pinimg.com/originals/e9/be/67/e9be67dd130aee203aaed715ddfcf75c.png",
+            ///-------->add picture
+          }}
+          
+        />
+        <LinearGradient
+          colors={["transparent", "rbga(0,0,8,9)"]}
+          style={styles.gradient}
+        />
+        {/* <Text style={styles.name}>{name}</Text>
             {
                 isFirst && renderChoice()
             } */}
-        </Animated.View>
-    )
+      </Animated.View>
+    );
 }
 
 const styles = StyleSheet.create({

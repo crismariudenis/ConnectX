@@ -17,7 +17,7 @@ import ThemePicker from "./ThemePicker";
 import TypeButton from "./TypeButton";
 import ImageUploader from "./ImageUploader";
 import * as ImagePicker from "expo-image-picker";
-import CardFetcher from "./CardFetcher";
+//import CardFetcher from "./CardFetcher";
 const CodeInput = ({ name, picture, email }) => {
   const [showUrl, setshowUrl] = useState(false);
   const [code, setCode] = useState("");
@@ -29,7 +29,7 @@ const CodeInput = ({ name, picture, email }) => {
   const [test, setTest] = useState(false);
   const resetValue = () => {
     setMessage("");
-   // setType("fetcher");
+    // setType("fetcher");
     setCode("");
     setImage(null);
   };
@@ -37,8 +37,8 @@ const CodeInput = ({ name, picture, email }) => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: false,
-      aspect: [2, 2],
-      quality: 1,
+      aspect: [6, 9],
+      quality: 0.2,
     }).catch((err) => console.log(err));
     // console.log(result);
     if (!result.cancelled) {
@@ -65,10 +65,6 @@ const CodeInput = ({ name, picture, email }) => {
   //     });
   //   resetValue();
   // };
-  //  handlePress=()=> {
-  //    resetValue();
-  //    console.log('value reset');
-  // }
   function getUrl(code, theme) {
     ///Set height to 40 rows
     if (code.split(/\r\n|\r|\n/).length < 40) {
@@ -181,8 +177,8 @@ const CodeInput = ({ name, picture, email }) => {
           email={email}
           resetValue={resetValue}
         />
+          {/* <CardFetcher /> */}
       </ScrollView>
-        {/* <CardFetcher/> */}
     </View>
   );
 };
