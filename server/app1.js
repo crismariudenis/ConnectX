@@ -3,11 +3,11 @@ const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 require("./Card");
-
+require('./Profile');
 app.use(bodyParser.json());
 
 const Card = mongoose.model("card");
-
+const Profile = mongoose.model('profile');
 
 const mongoUri =
   " mongodb+srv://LaserDenis:MmsmQg8LRObGWzTo@cluster0.wbxeg.mongodb.net/test?retryWrites=true&w=majority";
@@ -24,8 +24,8 @@ mongoose.connection.on('connected', () => {
 mongoose.connection.on("error", (err) => {
   console.log('error',err);
 });
-
-app.get("/", (req, res) => {
+///----------------------------------------------------->Profile
+app.get("/card", (req, res) => {
   Card.find({})
     .then((data) => {
       res.send(data);
@@ -35,7 +35,7 @@ app.get("/", (req, res) => {
     });
 });
 
-app.post('/send-data', (req, res) => {
+app.post('/send-data-card', (req, res) => {
     const card = new Card({
       name: req.body.name,
       email: req.body.email,
@@ -52,7 +52,7 @@ app.post('/send-data', (req, res) => {
         console.log(err)
     })
 })
-app.post('/delete', (req, res) => {
+app.post('/delete-card', (req, res) => {
   Card.findByIdAndRemove(req.body.id)
     .then(data => {
       console.log(data);
@@ -62,7 +62,7 @@ app.post('/delete', (req, res) => {
   })
 })
 
-app.post('/update', (req, res) => {
+app.post('/update-card', (req, res) => {
   Card.findByIdAndUpdate(req.body.id, {
     name: req.body.name,
     email: req.body.email,
@@ -80,6 +80,9 @@ app.post('/update', (req, res) => {
     });
 })
 
+
+
+
 app.listen(3000, () => {
-  console.log("server running");
+  console.log("server1 running");
 });

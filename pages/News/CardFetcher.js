@@ -16,7 +16,7 @@ const CardFetcher = () => {
   const [loading, setLoading] = useState(true);
 
   const fetchData = () => {
-    fetch("http://192.168.1.241:3000/")
+    fetch("http://192.168.1.241:3000/card")
       .then((res) => res.json())
       .then((results) => {
         setData(results);

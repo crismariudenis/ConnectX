@@ -54,7 +54,6 @@ const Card = ({ name, imageUri, type, message, picture , isFirst, swipe, tiltSig
             uri: "https://i.pinimg.com/originals/e9/be/67/e9be67dd130aee203aaed715ddfcf75c.png",
             ///-------->add picture
           }}
-          
         />
         <LinearGradient
           colors={["transparent", "rbga(0,0,8,9)"]}
@@ -71,7 +70,7 @@ const Card = ({ name, imageUri, type, message, picture , isFirst, swipe, tiltSig
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
-        top: 45,
+        top: 100,
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
@@ -117,7 +116,7 @@ const styles = StyleSheet.create({
     nopeContainer: {
         right: 45,
         transform: [{ rotate: '30deg' }],
-    }
+    },
 })
 
 export default Card;

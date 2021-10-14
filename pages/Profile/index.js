@@ -1,23 +1,26 @@
-import React from "react";
-import {StyleSheet,Text,View,Button,Pressable,Image,Alert,} from "react-native";
+import React, { useEffect } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  Pressable,
+  Image,
+  Alert,
+} from "react-native";
 import { COLORS } from "../../assets/styles/";
 import CodeInput from "./CodeInput/";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { profile } from "../../assets/data/profile";
+import { LinearGradient } from "expo-linear-gradient";
+import * as Animatable from "react-native-animatable";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AuthContext } from "../../components/Context";
 const AlertNotification = () => {
   Alert.alert("Option unavailable", "Please wait for the full version.", [
-    // {
-    //   text: "Ask me later",
-    //   onPress: () => console.log("Ask me later pressed"),
-    // },
-    // {
-    //   text: "Cancel",
-    //   onPress: () => console.log("Cancel Pressed"),
-    //   style: "cancel",
-    // },
-    { text: "OK", /*onPress: () => console.log("OK Pressed")*/ },
+    { text: "OK" },
   ]);
 };
 function CardScreen({ navigation }) {
@@ -30,47 +33,131 @@ function CardScreen({ navigation }) {
         textAlign: "center",
       }}
     >
-      <CodeInput name={profile.name} picture={profile.profileSource} email={profile.email}/>
+      <CodeInput
+        name={profile.name}
+        picture={profile.profileSource}
+        email={profile.email}
+      />
     </View>
   );
 }
 
 function HomeScreen({ navigation }) {
+  const { signOut, signIn, user } = React.useContext(AuthContext);
+  // useEffect(() => {
+  //   console.log(user);
+  // }, []);
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: COLORS.DARK_BLACK,
-        alignItems: "center",
-        textAlign: "center",
-      }}
-    >
-      <View style={styles.container2}>
-        <Image source={profile.profileSource} style={styles.image} />
-        <Text style={styles.name}>{profile.name}</Text>
-      </View>
-      <View style={{},styles.container1}>
-        <Pressable
-          style={styles.button}
-          onPress={() => navigation.push("Card")}
-        >
-          <Text style={styles.text}>Code Pics</Text>
-        </Pressable>
-        <Pressable
-          style={styles.button}
-          onPress={() => {
-            AlertNotification();
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Image
+          source={{
+            uri:user.profile
           }}
-        >
-          <Text style={styles.text}>Edit Profile</Text>
-        </Pressable>
-        <Pressable style={styles.button} onPress={() => { AlertNotification();}}>
-          <Text style={styles.text}>Report a Bug</Text>
-        </Pressable>
-        <Pressable style={styles.button} onPress={() => { AlertNotification();}}>
-          <Text style={styles.text}>Logout</Text>
-        </Pressable>
+          style={styles.image}
+        />
+        <Text style={styles.text_header}>{user.name}</Text>
       </View>
+      <Animatable.View animation="fadeInUpBig" style={styles.footer}>
+        <View style={styles.button}>
+          <Pressable
+            style={[
+              styles.signIn,
+              {
+                borderColor: COLORS.PURPLE,
+                borderWidth: 1,
+                marginTop: 15,
+              },
+            ]}
+            onPress={() => {
+              navigation.push("Card");
+            }}
+          >
+            <Text
+              style={[
+                styles.textSign,
+                {
+                  color: COLORS.PURPLE,
+                },
+              ]}
+            >
+              Create code pic
+            </Text>
+          </Pressable>
+          <Pressable
+            style={[
+              styles.signIn,
+              {
+                borderColor: COLORS.PURPLE,
+                borderWidth: 1,
+                marginTop: 15,
+              },
+            ]}
+            onPress={() => {
+              AlertNotification();
+            }}
+          >
+            <Text
+              style={[
+                styles.textSign,
+                {
+                  color: COLORS.PURPLE,
+                },
+              ]}
+            >
+              Edit Profile
+            </Text>
+          </Pressable>
+          <Pressable
+            style={[
+              styles.signIn,
+              {
+                borderColor: COLORS.PURPLE,
+                borderWidth: 1,
+                marginTop: 15,
+              },
+            ]}
+            onPress={() => {
+              AlertNotification();
+            }}
+          >
+            <Text
+              style={[
+                styles.textSign,
+                {
+                  color: COLORS.PURPLE,
+                },
+              ]}
+            >
+              Report a bug
+            </Text>
+          </Pressable>
+          <Pressable
+            style={[
+              styles.signIn,
+              {
+                borderColor: COLORS.PURPLE,
+                borderWidth: 1,
+                marginTop: 15,
+              },
+            ]}
+            onPress={() => {
+              signOut();
+            }}
+          >
+            <Text
+              style={[
+                styles.textSign,
+                {
+                  color: COLORS.PURPLE,
+                },
+              ]}
+            >
+              Logout
+            </Text>
+          </Pressable>
+        </View>
+      </Animatable.View>
     </View>
   );
 }
@@ -95,9 +182,8 @@ const Profile = () => {
             headerStyle: {
               backgroundColor: COLORS.DARK_BLACK,
             },
-            
+
             headerTintColor: COLORS.PURPLE,
-           
             //header
           }}
         />
@@ -109,35 +195,29 @@ const Profile = () => {
 export default Profile;
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.DARK_BLACK,
+  },
   container1: {
+    flex: 4,
     backgroundColor: COLORS.BLACK,
-    // backgroundColor: "red",
-    height: "60%",
-    width: "85%",
-    alignItems: "center",
-    textAlign: "center",
-    top: "15%",
-    borderRadius: 25,
-    //justifyContent: "space-around",
-    justifyContent: "space-evenly",
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
   },
   container2: {
+    flex: 2,
     alignItems: "center",
     textAlign: "center",
-    // backgroundColor: 'red',
     top: "10%",
   },
   button: {
-    // flex:1,
-    // flexBasis: "10%",
-    position: "relative",
+    justifyContent: "space-between",
     alignItems: "center",
-    justifyContent: "center",
-    width: "70%",
-    backgroundColor: "#9AA5CE",
-    borderRadius: 10,
-    height: "8%",
-    //padding: 10,
+    marginTop: 50,
+    height: "80%",
   },
   text: {
     color: "#414868",
@@ -149,5 +229,37 @@ const styles = StyleSheet.create({
   },
   name: {
     color: "#9AA5CE",
+  },
+  signIn: {
+    width: "80%",
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+  },
+  textSign: {
+    color: COLORS.BLACK,
+    fontWeight: "bold",
+  },
+  header: {
+    flex: 1,
+    justifyContent: "flex-end",
+    paddingHorizontal: 20,
+    paddingTop: 50,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  footer: {
+    flex: 3,
+    backgroundColor: COLORS.BLACK,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+  },
+  text_header: {
+    color: COLORS.LIGHT_PURPLE,
+    fontWeight: "bold",
+    fontSize: 30,
   },
 });

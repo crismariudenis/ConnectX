@@ -73,11 +73,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     alignContent: "center",
+
   },
   image: {
     resizeMode: "contain",
-    height: 420,
-    width: 310,
+    height: 450,
+    width: 400,
     position: "relative",
   },
   profile: {
@@ -87,12 +88,13 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     alignContent: "center",
+    top:15
   },
   infoContainer: {
     flexDirection: "row",
-    width: 240,
+    width: 400,
     bottom: 85,
-    left: 3,
+    left: 30,
   },
   text: {
     alignContent: "center",

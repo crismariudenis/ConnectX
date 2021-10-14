@@ -1,10 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
-import { StyleSheet, Text, View, Animated, PanResponder } from "react-native";
+import React, { useState, useRef, useEffect,useCallback } from "react";
+import { StyleSheet, Text, View, Animated, PanResponder ,Alert} from "react-native";
 import CardSwipe from "./CardSwipe";
 import { cards as cardArray } from "../../assets/data/cards";
 import { COLORS } from "../../assets/styles";
 import { CARD_HEIGHT, ACTION_OFFSET, OUT_OF_SCREEN } from "./style";
-import { useCallback } from "react";
 const News = () => {
   //swipe
   const [cards, setCards] = useState(cardArray);
@@ -59,10 +58,10 @@ const News = () => {
   ////---------mongoDB fetch
   useEffect(() => {
     fetchData();
-    console.log("restart");
+    //console.log("restart");
   }, []);
   const fetchData = () => {
-    fetch("http://192.168.1.241:3000/")
+    fetch("http://192.168.1.241:3000/card")
       .then((res) => res.json())
       .then((results) => {
         setData(results);
@@ -74,31 +73,13 @@ const News = () => {
   };
   return (
     <View style={styles.container}>
-      {/* {cards
-        .map(({ name, codeSource }, index) => {
-          const isFirst = index === 0;
-
-          const dragHandlers = isFirst ? panRespoder.panHandlers : {};
-          return (
-            <CardSwipe
-              key={name}
-              name={name}
-              source={codeSource}
-              isFirst={isFirst}
-              swipe={swipe}
-              tiltSign={tiltSign}
-              {...dragHandlers}
-            />
-          );
-        })
-        .reverse()} */}
       {data
         .map(({ name, imageUri, type, message, picture, _id }, index) => {
           const isFirst = index === 0;
 
           const dragHandlers = isFirst ? panRespoder.panHandlers : {};
 
-          console.log(_id);
+         // console.log(_id);
           return (
             <CardSwipe
               key={_id}

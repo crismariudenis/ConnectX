@@ -45,26 +45,6 @@ const CodeInput = ({ name, picture, email }) => {
       setImage(result.uri);
     }
   };
-  // const submitData = () => {
-  //   fetch("http://192.168.1.241:3000/send-data", {
-  //     method: "post",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       name,
-  //       email,
-  //       picture,
-  //       message,
-  //       type,
-  //     }),
-  //   })
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //     });
-  //   resetValue();
-  // };
   function getUrl(code, theme) {
     ///Set height to 40 rows
     if (code.split(/\r\n|\r|\n/).length < 40) {

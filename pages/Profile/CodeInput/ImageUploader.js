@@ -24,7 +24,7 @@ const ImageUploader = ({
     setUploadProgress(Math.round((event.loaded * 100) / event.total));
   };
   const submitData = () => {
-    fetch("http://192.168.1.241:3000/send-data", {
+    fetch("http://192.168.1.241:3000/send-data-card", {
       method: "post",
       headers: {
         "Content-Type": "application/json",

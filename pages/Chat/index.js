@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import Logo from "../../components/Logo";
 const Chat = () => {
   return (
     <View
@@ -9,7 +10,7 @@ const Chat = () => {
         alignItems: "center",
       }}
     >
-     <Text>Coming soon</Text>
+      <Logo/>
     </View>
   );
 };
