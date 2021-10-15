@@ -35,11 +35,14 @@ app.get("/profile", (req, res) => {
 });
 app.post("/send-data-profile", (req, res) => {
   const profile = new Profile({
-    name: req.body.name,
+    username: req.body.username,
     email: req.body.email,
     picture: req.body.picture,
     password: req.body.password,
-    userToken:req.body.userToken,
+    userToken: req.body.userToken,
+    avatarColor1: req.body.avatarColor1,
+    avatarColor2: req.body.avatarColor2,
+    profile: req.body.profile,
   });
   profile
     .save()
@@ -63,11 +66,14 @@ app.post("/delete-profile", (req, res) => {
 });
 app.post("/update-profile", (req, res) => {
   Profile.findByIdAndUpdate(req.body.id, {
-    name: req.body.name,
+    username: req.body.username,
     email: req.body.email,
     picture: req.body.picture,
     password: req.body.password,
     userToken: req.body.userToken,
+    avatarColor1: req.body.avatarColor1,
+    avatarColor2: req.body.avatarColor2,
+    profile: req.body.profile,
   })
     .then((data) => {
       console.log(data);

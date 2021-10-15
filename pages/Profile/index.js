@@ -18,6 +18,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import * as Animatable from "react-native-animatable";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "../../components/Context";
+import Logo from "../../components/Logo";
 const AlertNotification = () => {
   Alert.alert("Option unavailable", "Please wait for the full version.", [
     { text: "OK" },
@@ -34,7 +35,7 @@ function CardScreen({ navigation }) {
       }}
     >
       <CodeInput
-        name={profile.name}
+        name={profile.username}
         picture={profile.profileSource}
         email={profile.email}
       />
@@ -44,19 +45,25 @@ function CardScreen({ navigation }) {
 
 function HomeScreen({ navigation }) {
   const { signOut, signIn, user } = React.useContext(AuthContext);
-  // useEffect(() => {
-  //   console.log(user);
-  // }, []);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Image
-          source={{
-            uri:user.profile
-          }}
-          style={styles.image}
-        />
-        <Text style={styles.text_header}>{user.name}</Text>
+        {user.profile !== "" ? (
+          <Image
+            source={{
+              uri: user.profile,
+            }}
+            style={styles.image}
+          />
+        ) : (
+          <Logo
+            profileName={user.username}
+            color1={user.avatarColor1}
+            color2={user.avatarColor2}
+          />
+        )}
+
+        <Text style={styles.text_header}>{user.username}</Text>
       </View>
       <Animatable.View animation="fadeInUpBig" style={styles.footer}>
         <View style={styles.button}>

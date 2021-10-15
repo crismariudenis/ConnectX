@@ -100,15 +100,24 @@ const SignUpScreen = ({ navigation }) => {
     }
   };
   const submitData = (username, password) => {
+    const randomNumber = Math.floor(Math.random() * 360);
+    console.log(randomNumber);
+    const avatarColor1 = "hsla(" + randomNumber + ", 73%, 88%,1)";
+    const avatarColor2 = "hsla(" + randomNumber + ", 73%, 25%,1)";
+    // color1 = hsla(160, 73%, 88%,1);
+    // color2 = hsla(160, 73%, 25%,1);
     fetch("http://192.168.1.241:3001/send-data-profile", {
       method: "post",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: username,
+        username: username,
         password: password,
         userToken: new Date().getTime().toString(),
+        avatarColor1: avatarColor1,
+        avatarColor2: avatarColor2,
+        profile:'',
       }),
     })
       .then((res) => res.json())
@@ -258,7 +267,7 @@ const SignUpScreen = ({ navigation }) => {
             )}
           </Pressable>
         </View>
-        {data.password === data.confirm_password ? null : (
+        {data.password == data.confirm_password ? null : (
           <Animatable.View animation="fadeInLeft" duration={500}>
             <Text style={styles.errorMsg}>Must match the previous entry.</Text>
           </Animatable.View>

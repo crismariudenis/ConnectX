@@ -18,7 +18,7 @@ import Profile from "./pages/Profile/index";
 import TabBarIcon from "./components/TabBarIcon";
 import LogScreen from "./pages/Login";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
+ 
 const ACTIONS = {
   RETRIEVE_TOKEN: "RETRIEVE_TOKEN",
   LOGIN: "LOGIN",
@@ -29,17 +29,19 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const App = () => {
   const [user, setUser] = React.useState({
-    name: "",
+    username: "",
     email: "",
     profile:
       "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg",
+    avatarColor1: '',
+    avatarColor2:'',
   });
   const initialLoginState = {
     isLoading: true,
     userName: null,
     userToken: null,
   };
-  const loginReducer = (prevState, action) => {
+  const loginReducer = (prevState, action) => { 
     switch (action.type) {
       case "RETRIEVE_TOKEN":
         return {
@@ -76,26 +78,28 @@ const App = () => {
   );
 
   const authContext = React.useMemo(
-    () => ({
+    () => ({ 
       signIn: async (foundUser) => {
         console.log(foundUser)
         const userToken = String(foundUser[0].userToken);
         const userName = foundUser[0].username;
         setUser({
-          name: userName,
+          username: userName,
           email: foundUser[0].email,
-          profile:foundUser[0].profile,    
+          profile: foundUser[0].profile,
+          avatarColor1: foundUser[0].avatarColor1,
+          avatarColor2: foundUser[0].avatarColor2,
         });
-        console.log(user);
-        try {
+        console.log(user); 
+        try { 
           await AsyncStorage.setItem("userToken", userToken);
         } catch (e) {
-          console.log(e);
+          console.log(e); 
         }
-
+ 
         //console.log("user token: ", userToken);
         dispatch({ type: "LOGIN", id: userName, token: userToken });
-      },
+      }, 
       signOut: async () => {
         try {
           await AsyncStorage.removeItem("userToken");
@@ -105,12 +109,12 @@ const App = () => {
         dispatch({ type: ACTIONS.LOGOUT });
       },
       signUp: () => {
-        setIsLoading(false);
-        setUserToken("tkgfsdn");
+       // setIsLoading(false);
+       // setUserToken("tkgfsdn");
       },
       user,
     }),
-    []
+    [] 
   );
   useEffect(() => {
     setTimeout(async () => {
