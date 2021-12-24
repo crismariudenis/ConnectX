@@ -11,14 +11,11 @@ import {
 import { COLORS } from "../../assets/styles/";
 import CodeInput from "./CodeInput/";
 import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { profile } from "../../assets/data/profile";
-import { LinearGradient } from "expo-linear-gradient";
 import * as Animatable from "react-native-animatable";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { AuthContext } from "../../components/Context";
 import Logo from "../../components/Logo";
+import { useAuth } from "../../components/AuthContext";
 const AlertNotification = () => {
   Alert.alert("Option unavailable", "Please wait for the full version.", [
     { text: "OK" },
@@ -44,7 +41,8 @@ function CardScreen({ navigation }) {
 }
 
 function HomeScreen({ navigation }) {
-  const { signOut, signIn, user } = React.useContext(AuthContext);
+  //const { currentUser } = useAuth();
+  const { logout ,user} = useAuth();
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -148,9 +146,7 @@ function HomeScreen({ navigation }) {
                 marginTop: 15,
               },
             ]}
-            onPress={() => {
-              signOut();
-            }}
+            onPress={() => {logout()}}
           >
             <Text
               style={[

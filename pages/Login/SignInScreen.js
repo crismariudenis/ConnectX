@@ -18,9 +18,10 @@ import * as Animatable from "react-native-animatable";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Feather from "react-native-vector-icons/Feather";
 //import { Colors } from "react-native/Libraries/NewAppScreen";
-import { AuthContext } from "../../components/Context";
+import { useAuth } from "../../components/AuthContext";
 
 const SignInScreen = ({ navigation }) => {
+  const { login } = useAuth();
   const [users, setUsers] = React.useState([]);
   const [data, setData] = React.useState({
     email: "",
@@ -31,8 +32,7 @@ const SignInScreen = ({ navigation }) => {
     isValidUser: true,
     isValidPassword: true,
   });
-
-  const { signIn } = React.useContext(AuthContext);
+  //const { signIn } = React.useContext(AuthContext);
   const textInputChange = (val) => {
       //console.log(val);
     if (val.length >= 4) {
@@ -103,7 +103,7 @@ const SignInScreen = ({ navigation }) => {
   const loginHandle = (username, password) => {
 
     const foundUser = users.filter((item) => {
-         console.log(username, password);
+        // console.log(username, password);
         // console.log(password,item.password);
     //  console.log(item.name,item.email,item.profile);  
       
@@ -124,117 +124,121 @@ const SignInScreen = ({ navigation }) => {
       ]);
       return;
     }
-    signIn(foundUser);
+    login(foundUser);
   };
   return (
-    <View style={styles.container}>
-      {/* <StatusBar backgroundColor={COLORS.DARK_BLACK} barStyle="dark-content" /> */}
-      <View style={styles.header}>
-        <Text style={styles.text_header}>Welcome!</Text>
-      </View>
-      <Animatable.View animation="fadeInUpBig" style={styles.footer}>
-        <Text style={styles.text_footer}>Username</Text>
-        <View style={styles.action}>
-          <FontAwesome name="user-o" color={COLORS.PURPLE} size={20} />
-          <TextInput
-            placeholder="Your Username"
-            placeholderTextColor={COLORS.PURPLE}
-            style={styles.textInput}
-            autoCapitalize="none"
-            onChangeText={(val) => textInputChange(val)}
-            onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
-          />
+      <View style={styles.container}>
+        {/* <StatusBar backgroundColor={COLORS.DARK_BLACK} barStyle="dark-content" /> */}
+        <View style={styles.header}>
+          <Text style={styles.text_header}>Welcome!</Text>
+        </View>
+        <Animatable.View animation="fadeInUpBig" style={styles.footer}>
+          <Text style={styles.text_footer}>Username</Text>
+          <View style={styles.action}>
+            <FontAwesome name="user-o" color={COLORS.PURPLE} size={20} />
+            <TextInput
+              placeholder="Your Username"
+              placeholderTextColor={COLORS.PURPLE}
+              style={styles.textInput}
+              autoCapitalize="none"
+              onChangeText={(val) => textInputChange(val)}
+              onEndEditing={(e) => handleValidUser(e.nativeEvent.text)}
+            />
 
-          {data.check_textInputChange ? (
-            <Animatable.View animation="bounceIn">
-              <Feather name="check-circle" color={COLORS.GREEN} size={20} />
+            {data.check_textInputChange ? (
+              <Animatable.View animation="bounceIn">
+                <Feather name="check-circle" color={COLORS.GREEN} size={20} />
+              </Animatable.View>
+            ) : null}
+          </View>
+          {data.isValidUser ? null : (
+            <Animatable.View animation="fadeInLeft" duration={500}>
+              <Text style={styles.errorMsg}>
+                Username must be 4 characters long.
+              </Text>
             </Animatable.View>
-          ) : null}
-        </View>
-        {data.isValidUser ? null : (
-          <Animatable.View animation="fadeInLeft" duration={500}>
-            <Text style={styles.errorMsg}>
-              Username must be 4 characters long.
-            </Text>
-          </Animatable.View>
-        )}
+          )}
 
-        <Text
-          style={[
-            styles.text_footer,
-            {
-              marginTop: 35,
-            },
-          ]}
-        >
-          Password
-        </Text>
-        <View style={styles.action}>
-          <FontAwesome name="lock" color={COLORS.PURPLE} size={20} />
-          <TextInput
-            placeholder="Your Password"
-            placeholderTextColor={COLORS.PURPLE}
-            secureTextEntry={data.secureTextEntry?true:false}
-            style={styles.textInput}
-            autoCapitalize="none"
-            onChangeText={(val) => handlePasswordChange(val)}
-          />
-          <Pressable onPress={updateSecureTextEntry}>
-            {data.secureTextEntry ? (
-              <Feather name="eye-off" color={COLORS.LIGHT_PURPLE} size={20} />
-            ) : (
-              <Feather name="eye" color={COLORS.LIGHT_PURPLE} size={20} />
-            )}
-          </Pressable>
-        </View>
-        {data.isValidPassword ? null : (
-          <Animatable.View animation="fadeInLeft" duration={500}>
-            <Text style={styles.errorMsg}>
-              Password must be 8 characters long.
-            </Text>
-          </Animatable.View>
-        )}
-
-        <View style={styles.button}>
-          <Pressable
-            style={styles.signIn}
-            onPress={() => {
-              loginHandle(data.username, data.password);
-            }}
-          >
-            <LinearGradient
-              colors={[COLORS.LIGHT_PURPLE, COLORS.PURPLE]}
-              style={styles.signIn}
-            >
-              <Text style={styles.textSign}>Sign In</Text>
-            </LinearGradient>
-          </Pressable>
-
-          <Pressable
-            onPress={() => navigation.navigate("SignUpScreen")}
+          <Text
             style={[
-              styles.signIn,
+              styles.text_footer,
               {
-                borderColor: COLORS.PURPLE,
-                borderWidth: 1,
-                marginTop: 15,
+                marginTop: 35,
               },
             ]}
           >
-            <Text
+            Password
+          </Text>
+          <View style={styles.action}>
+            <FontAwesome name="lock" color={COLORS.PURPLE} size={20} />
+            <TextInput
+              placeholder="Your Password"
+              placeholderTextColor={COLORS.PURPLE}
+              secureTextEntry={data.secureTextEntry ? true : false}
+              style={styles.textInput}
+              autoCapitalize="none"
+              onChangeText={(val) => handlePasswordChange(val)}
+            />
+            <Pressable onPress={updateSecureTextEntry}>
+              {data.secureTextEntry ? (
+                <Feather name="eye-off" color={COLORS.LIGHT_PURPLE} size={20} />
+              ) : (
+                <Feather name="eye" color={COLORS.LIGHT_PURPLE} size={20} />
+              )}
+            </Pressable>
+          </View>
+          {data.isValidPassword ? null : (
+            <Animatable.View animation="fadeInLeft" duration={500}>
+              <Text style={styles.errorMsg}>
+                Password must be 8 characters long.
+              </Text>
+            </Animatable.View>
+          )}
+
+          <View style={styles.button}>
+            <Pressable
+              style={styles.signIn}
+              onPress={() => {
+                loginHandle(data.username, data.password);
+              }}
+            >
+              <LinearGradient
+                colors={[COLORS.LIGHT_PURPLE, COLORS.PURPLE]}
+                style={styles.signIn}
+              >
+                <Text style={styles.textSign}>Sign In</Text>
+              </LinearGradient>
+            </Pressable>
+
+            <Pressable
+              onPress={() => navigation.navigate("SignUpScreen")}
               style={[
-                styles.textSign,
+                styles.signIn,
                 {
-                  color: COLORS.PURPLE,
+                  borderColor: COLORS.PURPLE,
+                  borderWidth: 1,
+                  marginTop: 15,
                 },
               ]}
             >
-              Sign Up
-            </Text>
+              <Text
+                style={[
+                  styles.textSign,
+                  {
+                    color: COLORS.PURPLE,
+                  },
+                ]}
+              >
+                Sign Up
+              </Text>
           </Pressable>
-        </View>
-      </Animatable.View>
-    </View>
+          <Pressable onPress={()=>login()}>
+            <Text>Log In</Text>
+          </Pressable>
+          </View>
+        </Animatable.View>
+      </View>
+
   );
 };
 

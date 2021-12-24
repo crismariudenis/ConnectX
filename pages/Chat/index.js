@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import {COLORS} from '../../assets//styles'
 import Logo from "../../components/Logo";
+import * as SecureStore from "expo-secure-store";
 const Chat = () => {
 
   return (

@@ -130,7 +130,7 @@ const SignUpScreen = ({ navigation }) => {
       });
   };
   const signHandle = (username, password, confirm_password) => {
-    if (data.isValidPassword && data.isValidUser) {
+    if (data.isValidPassword && data.isValidUser && password!='') {
       const foundUser = users.filter((item) => {
         //  console.log(username, item.username);
         return username == item.username;
