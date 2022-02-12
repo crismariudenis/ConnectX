@@ -14,19 +14,20 @@ import { useAuth } from "./components/AuthContext";
 import * as SecureStore from "expo-secure-store";
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-const App = () => { 
+const App = () => {
   const { loggedIn, loginState, dispatch } = useAuth();
   async function getValueFor(key) {
     let result = await SecureStore.getItemAsync(key);
     console.log(result);
     dispatch({ type: "RETRIEVE_TOKEN", token: result });
   }
- 
+
   // console.log(`LoggedIn ${loggedIn}`);
   //const { user } = userAuth();
   useEffect(() => {
     getValueFor("userToken");
   }, []);
+   
 
   if (loginState.isLoading) {
     return (
